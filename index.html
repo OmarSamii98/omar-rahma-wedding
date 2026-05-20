@@ -13,7 +13,7 @@
   <style>
     /* ===== RESET & BASE ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; scroll-snap-type: y proximity; }
     body {
       font-family: 'Cormorant Garamond', Georgia, serif;
       background: #faf9f7;
@@ -1378,7 +1378,7 @@
       opacity: 0;
       transition: opacity 0.5s ease;
     }
-    .border-trace.visible { opacity: 1; }
+    .border-trace.visible { opacity: 0.6; }
     .border-trace-line {
       position: absolute;
       background: linear-gradient(90deg, transparent, #c8b898, transparent);
@@ -1708,6 +1708,28 @@
     @keyframes ambBar {
       0%,100% { height: 3px; } 50% { height: 10px; }
     }
+
+    /* ===== SCROLL SNAP ===== */
+    [data-section] {
+      scroll-snap-align: start;
+    }
+
+    /* ===== ENTRANCE ANIMATION VARIANTS ===== */
+    [data-reveal-left] {
+      opacity: 0; transform: translateX(-40px);
+      transition: all 1s ease;
+    }
+    [data-reveal-left].reveal { opacity: 1; transform: translateX(0); }
+    [data-reveal-right] {
+      opacity: 0; transform: translateX(40px);
+      transition: all 1s ease;
+    }
+    [data-reveal-right].reveal { opacity: 1; transform: translateX(0); }
+    [data-reveal-scale] {
+      opacity: 0; transform: scale(0.85);
+      transition: all 1s ease;
+    }
+    [data-reveal-scale].reveal { opacity: 1; transform: scale(1); }
 
     /* ===== WEDDING VECTORS ===== */
     .wedding-vector {
@@ -2197,8 +2219,8 @@
         </svg>
       </div>
       <span class="hero-monogram" data-reveal>O & R · 2026</span>
-      <p class="hero-subtitle" data-reveal>we're getting married</p>
-      <h1 class="hero-names" data-reveal>
+      <p class="hero-subtitle" data-reveal-left>we're getting married</p>
+      <h1 class="hero-names" data-reveal-scale>
         Omar <span class="hero-ampersand">&</span><br>Rahma
       </h1>
       <div class="hero-date" data-reveal>
@@ -2296,7 +2318,7 @@
       <h2 class="std-title wipe-reveal" data-reveal>
         SAVE<br><span class="std-title-the">the</span>DATE!
       </h2>
-      <div class="couple-photo" data-reveal style="position:relative;">
+      <div class="couple-photo" data-reveal-scale style="position:relative;">
         <div class="couple-glow"></div>
         <img src="couple.png" alt="Omar & Rahma" loading="eager">
       </div>
@@ -2313,7 +2335,7 @@
       <div class="venue-bg"></div>
       <div class="venue-stars" id="venueStars"></div>
       <div class="venue-content">
-        <h2 class="venue-tagline" data-reveal>
+        <h2 class="venue-tagline" data-reveal-left>
           Where love meets<br><em>L'Eskander.</em>
         </h2>
         <span class="venue-label" data-reveal>VENUE</span>
@@ -2363,7 +2385,7 @@
             <path d="M47 16 C47 13, 44 11, 43 13 C42 15, 45 18, 48 20 C51 18, 54 15, 53 13 C52 11, 49 13, 49 16" fill="rgba(200,184,152,0.3)" stroke="none"/>
           </svg>
         </div>
-        <h2 class="story-title" data-reveal>Our Story</h2>
+        <h2 class="story-title" data-reveal-right>Our Story</h2>
         <p class="story-subtitle" data-reveal>A love written in the stars</p>
       </div>
       <div class="story-timeline">
@@ -2441,7 +2463,7 @@
           <path d="M48 52 L52 60"/>
         </svg>
       </div>
-      <h2 class="countdown-label" data-reveal>Counting the days</h2>
+      <h2 class="countdown-label" data-reveal-left>Counting the days</h2>
       <div class="countdown-grid">
         <div class="countdown-card" data-reveal style="transition-delay:0s">
           <div class="countdown-number" id="cd-days">---</div>
@@ -2488,7 +2510,7 @@
 
     <!-- GUESTBOOK -->
     <section class="section-guestbook" data-section>
-      <h2 class="guestbook-title" data-reveal>Leave a Wish</h2>
+      <h2 class="guestbook-title" data-reveal-scale>Leave a Wish</h2>
       <p class="guestbook-subtitle" data-reveal>Share your blessings with the couple</p>
       <form class="guestbook-form" data-reveal id="guestbookForm" onsubmit="submitWish(event)">
         <input class="gb-input" type="text" id="gbName" placeholder="Your name" required>
@@ -2565,6 +2587,8 @@
       crackWaxSeal();
       document.querySelector('.click-text').style.opacity = '0';
       playEnvelopeSound();
+      // Haptic vibration on envelope open
+      if (navigator.vibrate) navigator.vibrate([30, 50, 60]);
       setTimeout(() => envelope.classList.add('opened'), 400);
 
       setTimeout(() => {
@@ -2619,7 +2643,7 @@
         rootMargin: '0px 0px -40px 0px'
       });
 
-      document.querySelectorAll('[data-reveal]').forEach(el => {
+      document.querySelectorAll('[data-reveal], [data-reveal-left], [data-reveal-right], [data-reveal-scale]').forEach(el => {
         observer.observe(el);
       });
     }
@@ -2796,6 +2820,7 @@
     function burstConfetti() {
       const container = document.getElementById('envelopeConfetti');
       if (!container) return;
+      if (navigator.vibrate) navigator.vibrate([20, 30, 20]);
       const colors = ['#c8b898', '#d4a559', '#e8d5b5', '#f0e6d0', '#b8903e', '#fff', '#ffd700'];
       for (let i = 0; i < 80; i++) {
         const piece = document.createElement('div');
