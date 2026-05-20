@@ -3217,61 +3217,9 @@
 
     // ===== 7. SAVE AS IMAGE =====
     function saveAsImage() {
-      // Create a beautiful summary card using canvas
-      const canvas = document.createElement('canvas');
-      canvas.width = 600; canvas.height = 900;
-      const ctx = canvas.getContext('2d');
-      // Background
-      const grad = ctx.createLinearGradient(0, 0, 600, 900);
-      grad.addColorStop(0, '#faf9f7');
-      grad.addColorStop(0.5, '#f5f0e8');
-      grad.addColorStop(1, '#faf9f7');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 600, 900);
-      // Border
-      ctx.strokeStyle = '#c8b898';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(20, 20, 560, 860);
-      ctx.strokeRect(28, 28, 544, 844);
-      // Text
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#c8b898';
-      ctx.font = '20px serif';
-      ctx.fillText('بسم الله الرحمن الرحيم', 300, 80);
-      ctx.fillStyle = '#1a1a1a';
-      ctx.font = 'italic 18px Georgia';
-      ctx.fillText("we're getting married", 300, 160);
-      ctx.font = 'bold 52px Palatino';
-      ctx.fillText('Omar &', 300, 230);
-      ctx.fillText('Rahma', 300, 290);
-      ctx.fillStyle = '#c8b898';
-      ctx.font = 'italic 16px Georgia';
-      ctx.fillText('❧', 300, 330);
-      ctx.fillStyle = '#666';
-      ctx.font = '14px sans-serif';
-      ctx.fillText('26  ·  06  ·  2026  ·  6 PM', 300, 380);
-      ctx.fillStyle = '#1a1a1a';
-      ctx.font = '16px Georgia';
-      ctx.fillText("L'Eskander Venue — Sheikh Zayed", 300, 430);
-      ctx.fillStyle = '#c8b898';
-      ctx.font = 'italic 18px Georgia';
-      ctx.fillText('Save the Date', 300, 500);
-      ctx.fillStyle = '#999';
-      ctx.font = 'italic 14px Georgia';
-      ctx.fillText('Love, laughter, and happily', 300, 570);
-      ctx.fillText('ever after awaits...', 300, 595);
-      // Decorative line
-      ctx.strokeStyle = '#c8b898';
-      ctx.lineWidth = 0.5;
-      ctx.beginPath(); ctx.moveTo(200, 540); ctx.lineTo(400, 540); ctx.stroke();
-      // URL
-      ctx.fillStyle = '#aaa';
-      ctx.font = '11px sans-serif';
-      ctx.fillText(window.location.href, 300, 840);
-      // Download
       const link = document.createElement('a');
-      link.download = 'Omar-Rahma-Wedding-Invitation.png';
-      link.href = canvas.toDataURL('image/png');
+      link.download = 'Omar-Rahma-Wedding-Invitation.jpg';
+      link.href = 'invitation-card.jpg';
       link.click();
     }
 
