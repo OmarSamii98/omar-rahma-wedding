@@ -2523,7 +2523,6 @@
         </button>
         <p class="gb-success" id="gbSuccess">Thank you for your beautiful wish!</p>
       </form>
-      <div class="gb-wishes" id="gbWishes"></div>
     </section>
 
     <!-- CLOSING (Night Sky) -->
@@ -3217,24 +3216,12 @@
     }
 
     // ===== 6. GUESTBOOK =====
-    let wishes = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
-    function renderWishes() {
-      const container = document.getElementById('gbWishes');
-      if (!container) return;
-      container.innerHTML = wishes.map(w =>
-        `<div class="gb-wish"><div class="gb-wish-name">${w.name}</div><div class="gb-wish-text">${w.message}</div></div>`
-      ).join('');
-    }
+    function renderWishes() {}
     function submitWish(e) {
       e.preventDefault();
       const name = document.getElementById('gbName').value.trim();
       const message = document.getElementById('gbMessage').value.trim();
       if (!name || !message) return;
-      wishes.unshift({ name: name.toUpperCase(), message });
-      localStorage.setItem('wedding_wishes', JSON.stringify(wishes));
-      renderWishes();
-      // Send via EmailJS (free email service)
-      const emailBody = `New Wedding Wish!\n\nFrom: ${name}\nMessage: ${message}\n\nSent from your wedding invitation.`;
       fetch('https://formsubmit.co/ajax/omarrr.samiii98@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
