@@ -3222,8 +3222,9 @@
       const name = document.getElementById('gbName').value.trim();
       const message = document.getElementById('gbMessage').value.trim();
       if (!name || !message) return;
-      const waText = encodeURIComponent('💍 Wedding Wish\n\nFrom: ' + name + '\n\n' + message + '\n\n— Sent from your wedding invitation');
-      window.open('https://wa.me/201120711818?text=' + waText, '_blank');
+      window.location.href = 'mailto:omarrr.samiii98@gmail.com?subject=' +
+        encodeURIComponent('Wedding Wish from ' + name) +
+        '&body=' + encodeURIComponent('From: ' + name + '\n\n' + message + '\n\n— Sent from your wedding invitation');
       document.getElementById('gbName').value = '';
       document.getElementById('gbMessage').value = '';
       document.getElementById('gbSuccess').style.display = 'block';
