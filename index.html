@@ -3222,6 +3222,7 @@
       const name = document.getElementById('gbName').value.trim();
       const message = document.getElementById('gbMessage').value.trim();
       if (!name || !message) return;
+      // Try FormSubmit
       fetch('https://formsubmit.co/ajax/omarrr.samiii98@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -3230,7 +3231,19 @@
           message: message,
           _subject: 'New Wedding Wish from ' + name,
         })
-      }).catch(() => {});
+      }).then(r => r.json()).then(data => {
+        if (!data.success) {
+          // Fallback: open mailto
+          window.location.href = 'mailto:omarrr.samiii98@gmail.com?subject=' +
+            encodeURIComponent('Wedding Wish from ' + name) +
+            '&body=' + encodeURIComponent('From: ' + name + '\n\n' + message);
+        }
+      }).catch(() => {
+        // Fallback: open mailto
+        window.location.href = 'mailto:omarrr.samiii98@gmail.com?subject=' +
+          encodeURIComponent('Wedding Wish from ' + name) +
+          '&body=' + encodeURIComponent('From: ' + name + '\n\n' + message);
+      });
       document.getElementById('gbName').value = '';
       document.getElementById('gbMessage').value = '';
       document.getElementById('gbSuccess').style.display = 'block';
